@@ -5,6 +5,11 @@ function App() {
   const [neutralVote, setNeutralVote] = useState(0);
   const [badVote, setBadVote] = useState(0);
 
+  const allVotes = goodVote + neutralVote + badVote;
+  const totalVotes = goodVote - badVote;
+  const averageVote = allVotes > 0 ? totalVotes / allVotes : 0;
+  const positiveVotes = allVotes > 0 ? (goodVote / allVotes) * 100 : 0;
+
   return (
     <div>
       <h1>Give Feedback</h1>
@@ -18,6 +23,9 @@ function App() {
         <p>Good: {goodVote}</p>
         <p>Neutral: {neutralVote}</p>
         <p>Bad: {badVote}</p>
+        <p>All: {allVotes}</p>
+        <p>Average: {averageVote}</p>
+        <p>Positive: {positiveVotes}</p>
       </div>
     </div>
   );

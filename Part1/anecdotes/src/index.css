@@ -18,8 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 500px;
-  height: 120px;
+  width: 450px;
   padding: 15px 25px;
   border: 1px solid black;
   border-radius: 5px;
@@ -29,7 +28,6 @@ body {
 
 .anecdote-container {
   text-align: center;
-  height: 100px;
 }
 
 .button-container {
@@ -50,6 +48,7 @@ button {
   padding: 5px;
   text-transform: uppercase;
   width: 150px;
+  margin-right: 10px;
 }
 
 button:hover {

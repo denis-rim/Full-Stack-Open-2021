@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const App = () => {
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
 
   const getRandomNumber = () => {
     const newSelected = Math.round(Math.random() * (anecdotes.length - 1));
@@ -12,11 +13,19 @@ const App = () => {
     getRandomNumber();
   };
 
+  const handleVote = () => {
+    const copyVotes = [...votes];
+    copyVotes[selected] += 1;
+    setVotes(copyVotes);
+  };
+
   return (
     <div className="container">
       <div className="anecdote-container">{anecdotes[selected]}</div>
+      <p>Has: {votes[selected]} votes</p>
       <div className="button-container">
         <button onClick={getRandomNumber}>Next Anecdote</button>
+        <button onClick={handleVote}>Vote</button>
       </div>
     </div>
   );

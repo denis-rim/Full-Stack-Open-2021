@@ -1,5 +1,19 @@
 import React, { useState } from "react";
 
+const Button = ({ handleClick, text }) => {
+  return <button onClick={handleClick}>{text}</button>;
+};
+
+const ShowAnecdote = ({ anecdote, votes }) => {
+  return (
+    <div>
+      <div>{anecdote}</div>
+
+      <p>Has: {votes} votes</p>
+    </div>
+  );
+};
+
 const App = () => {
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
@@ -24,15 +38,18 @@ const App = () => {
   return (
     <div className="container">
       <h2>Anecdote of the day</h2>
-      <div className="anecdote-container">{anecdotes[selected]}</div>
-      <p>Has: {votes[selected]} votes</p>
+      <div className="anecdote-container">
+        <ShowAnecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
+      </div>
       <div className="button-container">
-        <button onClick={getRandomNumber}>Next Anecdote</button>
-        <button onClick={handleVote}>Vote</button>
+        <Button handleClick={getRandomNumber} text="Next Anecdote" />
+        <Button handleClick={handleVote} text="Vote" />
       </div>
       <h2>Anecdote with most votes</h2>
-      <div>{anecdotes[topAnecdote]}</div>
-      <p>has {votes[topAnecdote]} votes</p>
+      <ShowAnecdote
+        anecdote={anecdotes[topAnecdote]}
+        votes={votes[topAnecdote]}
+      />
     </div>
   );
 };

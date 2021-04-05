@@ -28,6 +28,7 @@ body {
 
 .anecdote-container {
   text-align: center;
+  height: 120px;
 }
 
 .button-container {

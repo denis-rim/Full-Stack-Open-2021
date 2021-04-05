@@ -45,7 +45,6 @@ const App = () => {
     setNewPerson({ ...newPerson, [name]: value });
   };
 
-
   return (
     <div>
       <h2>Phonebook</h2>

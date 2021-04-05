@@ -1,14 +1,28 @@
 import { useState } from "react";
 
-function App() {
-  const [goodVote, setGoodVote] = useState(0);
-  const [neutralVote, setNeutralVote] = useState(0);
-  const [badVote, setBadVote] = useState(0);
-
+const Statistic = ({ goodVote, neutralVote, badVote }) => {
   const allVotes = goodVote + neutralVote + badVote;
   const totalVotes = goodVote - badVote;
   const averageVote = allVotes > 0 ? totalVotes / allVotes : 0;
   const positiveVotes = allVotes > 0 ? (goodVote / allVotes) * 100 : 0;
+
+  return (
+    <div>
+      <h2>Statistics:</h2>
+      <p>Good: {goodVote}</p>
+      <p>Neutral: {neutralVote}</p>
+      <p>Bad: {badVote}</p>
+      <p>All: {allVotes}</p>
+      <p>Average: {averageVote}</p>
+      <p>Positive: {positiveVotes}</p>
+    </div>
+  );
+};
+
+function App() {
+  const [goodVote, setGoodVote] = useState(0);
+  const [neutralVote, setNeutralVote] = useState(0);
+  const [badVote, setBadVote] = useState(0);
 
   return (
     <div>
@@ -19,13 +33,11 @@ function App() {
         <button onClick={() => setBadVote(badVote + 1)}>Bad</button>
       </div>
       <div>
-        <h2>Statistics:</h2>
-        <p>Good: {goodVote}</p>
-        <p>Neutral: {neutralVote}</p>
-        <p>Bad: {badVote}</p>
-        <p>All: {allVotes}</p>
-        <p>Average: {averageVote}</p>
-        <p>Positive: {positiveVotes}</p>
+        <Statistic
+          goodVote={goodVote}
+          neutralVote={neutralVote}
+          badVote={badVote}
+        />
       </div>
     </div>
   );

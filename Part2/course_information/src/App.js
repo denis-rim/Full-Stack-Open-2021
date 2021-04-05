@@ -1,48 +1,5 @@
 import React from "react";
-
-const Header = ({ name }) => {
-  return <h2>{name}</h2>;
-};
-
-const Part = ({ name, exercises }) => {
-  return (
-    <p>
-      {name}: {exercises}
-    </p>
-  );
-};
-
-const Content = ({ parts }) => {
-  console.log(parts);
-  return (
-    <div>
-      {parts.map((part) => {
-        return (
-          <Part key={part.id} name={part.name} exercises={part.exercises} />
-        );
-      })}
-    </div>
-  );
-};
-
-const Total = ({ parts }) => {
-  const sum = parts.reduce((acc, item) => {
-    return acc + item.exercises;
-  }, 0);
-
-  return <p>Total of {sum} exercises</p>;
-};
-
-const Course = ({ course }) => {
-  return (
-    <div>
-      <h1>Web development curriculum</h1>
-      <Header name={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
-    </div>
-  );
-};
+import Course from "./components/Course";
 
 const App = () => {
   const courses = [
@@ -91,7 +48,8 @@ const App = () => {
   ];
 
   return (
-    <div>
+    <div className="container">
+      <h1>Web development curriculum</h1>
       {courses.map((course) => {
         return <Course course={course} />;
       })}

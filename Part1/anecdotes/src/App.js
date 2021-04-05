@@ -8,7 +8,6 @@ const ShowAnecdote = ({ anecdote, votes }) => {
   return (
     <div>
       <div>{anecdote}</div>
-
       <p>Has: {votes} votes</p>
     </div>
   );

@@ -11,7 +11,6 @@ const Part = ({ name, exercises }) => {
 };
 
 const Content = ({ parts }) => {
-  console.log(parts);
   return (
     <div>
       {parts.map((part) => {

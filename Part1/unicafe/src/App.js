@@ -1,6 +1,20 @@
 import { useState } from "react";
 
-const Statistic = ({ goodVote, neutralVote, badVote }) => {
+const Statistic = ({ text, data }) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>
+        {data}
+        {text === "Positive" ? "%" : ""}
+      </td>
+    </tr>
+  );
+};
+
+const Statistics = ({ data }) => {
+  const { goodVote, neutralVote, badVote } = data;
+
   const allVotes = goodVote + neutralVote + badVote;
   const totalVotes = goodVote - badVote;
   const averageVote = allVotes > 0 ? totalVotes / allVotes : 0;
@@ -11,16 +25,21 @@ const Statistic = ({ goodVote, neutralVote, badVote }) => {
   }
 
   return (
-    <div>
-      <h2>Statistics:</h2>
-      <p>Good: {goodVote}</p>
-      <p>Neutral: {neutralVote}</p>
-      <p>Bad: {badVote}</p>
-      <p>All: {allVotes}</p>
-      <p>Average: {averageVote}</p>
-      <p>Positive: {positiveVotes}</p>
-    </div>
+    <table>
+      <tbody>
+        <Statistic text="Good" data={goodVote} />
+        <Statistic text="Neutral" data={neutralVote} />
+        <Statistic text="Bad" data={badVote} />
+        <Statistic text="All" data={allVotes} />
+        <Statistic text="Average" data={averageVote} />
+        <Statistic text="Positive" data={positiveVotes} />
+      </tbody>
+    </table>
   );
+};
+
+const Button = ({ handleClick, text }) => {
+  return <button onClick={handleClick}>{text}</button>;
 };
 
 function App() {
@@ -29,20 +48,19 @@ function App() {
   const [badVote, setBadVote] = useState(0);
 
   return (
-    <div>
+    <div className="wrapper">
       <h1>Give Feedback</h1>
-      <div>
-        <button onClick={() => setGoodVote(goodVote + 1)}>Good</button>
-        <button onClick={() => setNeutralVote(neutralVote + 1)}>Neutral</button>
-        <button onClick={() => setBadVote(badVote + 1)}>Bad</button>
-      </div>
-      <div>
-        <Statistic
-          goodVote={goodVote}
-          neutralVote={neutralVote}
-          badVote={badVote}
+      <div className="button-section">
+        <Button handleClick={() => setGoodVote(goodVote + 1)} text="Good" />
+        <Button
+          handleClick={() => setNeutralVote(neutralVote + 1)}
+          text="Neutral"
         />
+        <Button handleClick={() => setBadVote(badVote + 1)} text="Bad" />
       </div>
+
+      <h2>Statistics:</h2>
+      <Statistics data={{ goodVote, neutralVote, badVote }} />
     </div>
   );
 }

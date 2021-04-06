@@ -27,12 +27,17 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
+    if (!newPerson.name || !newPerson.number) {
+      alert("Name and number field must be filled");
+      return;
+    }
+
     const existingPerson = persons.find(
       (person) => person.name === newPerson.name
     );
 
     if (existingPerson) {
-      alert(`${newPerson} is already added to phonebook`);
+      alert(`${newPerson.name} is already added to phonebook`);
       resetInput();
       return;
     }
@@ -42,8 +47,10 @@ const App = () => {
       number: newPerson.number,
     };
 
-    setPersons(persons.concat(newObject));
-    resetInput();
+    axios.post("http://localhost:3001/persons", newObject).then((response) => {
+      setPersons(persons.concat(response.data));
+      resetInput();
+    });
   };
 
   const handleChange = (event) => {

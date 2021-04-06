@@ -37,7 +37,7 @@ body {
 
 .country-list-wrapper {
   min-width: 350px;
-  margin: 5px 0px;
+  margin: 5px 0;
   padding: 5px 10px;
   border: 1px solid #272727;
 }
@@ -55,6 +55,17 @@ body {
   margin-left: 5px;
 }
 
-.country-detail img {
+.country-detail {
+  display: flex;
+}
+
+.country-detail__country {
+  margin: 0 10px;
+}
+.country-detail__country img {
   margin-top: 10px;
+}
+
+.country-detail__weather {
+  margin: 0 10px;
 }

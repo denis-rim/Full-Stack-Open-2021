@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import FilterForm from "./components/FilterForm";
+import PersonsFormInput from "./components/PersonsFormInput";
+import DisplayPersons from "./components/DisplayPersons";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -22,7 +25,9 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    const existingPerson = persons.find((person) => person.name === newPerson);
+    const existingPerson = persons.find(
+      (person) => person.name === newPerson.name
+    );
 
     if (existingPerson) {
       alert(`${newPerson} is already added to phonebook`);
@@ -46,41 +51,17 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="app">
       <h2>Phonebook</h2>
-      <div>
-        filter show with:{" "}
-        <input
-          name="filter"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        />
-      </div>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input name="name" value={name} onChange={handleChange} />
-        </div>
-        <div>
-          number: <input name="number" value={number} onChange={handleChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <FilterForm filter={filter} setFilter={setFilter} />
+      <PersonsFormInput
+        name={name}
+        number={number}
+        handleChange={handleChange}
+        addPerson={addPerson}
+      />
       <h2>Numbers</h2>
-      <div>
-        {persons
-          .filter((person) =>
-            person.name.toLowerCase().includes(filter.toLowerCase())
-          )
-          .map((person) => {
-            return (
-              <p key={person.name}>
-                {person.name} {person.number}
-              </p>
-            );
-          })}
-      </div>
+      <DisplayPersons filter={filter} persons={persons} />
     </div>
   );
 };

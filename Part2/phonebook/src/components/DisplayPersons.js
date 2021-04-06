@@ -10,7 +10,7 @@ const DisplayPersons = ({ persons, filter }) => {
           )
           .map((person) => {
             return (
-              <li key={person.name}>
+              <li key={person.id}>
                 {person.name} {person.number}
               </li>
             );

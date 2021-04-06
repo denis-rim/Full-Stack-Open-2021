@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import personServices from "./services/persons";
 import FilterForm from "./components/FilterForm";
 import PersonsFormInput from "./components/PersonsFormInput";
 import DisplayPersons from "./components/DisplayPersons";
@@ -15,9 +15,14 @@ const App = () => {
   const { name, number } = newPerson;
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
-    });
+    personServices
+      .get()
+      .then((response) => {
+        setPersons(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   const resetInput = () => {
@@ -47,8 +52,8 @@ const App = () => {
       number: newPerson.number,
     };
 
-    axios.post("http://localhost:3001/persons", newObject).then((response) => {
-      setPersons(persons.concat(response.data));
+    personServices.create(newObject).then((response) => {
+      setPersons(persons.concat(response));
       resetInput();
     });
   };

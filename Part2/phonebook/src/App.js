@@ -3,6 +3,7 @@ import personServices from "./services/persons";
 import FilterForm from "./components/FilterForm";
 import PersonsFormInput from "./components/PersonsFormInput";
 import DisplayPersons from "./components/DisplayPersons";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,8 +12,20 @@ const App = () => {
     number: "",
   });
   const [filter, setFilter] = useState("");
+  const [message, setMessage] = useState(null);
 
   const { name, number } = newPerson;
+
+  const showMessage = (message, type) => {
+    setMessage({
+      message,
+      type,
+    });
+
+    setTimeout(() => {
+      setMessage(null);
+    }, 4000);
+  };
 
   useEffect(() => {
     personServices
@@ -21,6 +34,7 @@ const App = () => {
         setPersons(response);
       })
       .catch((error) => {
+        showMessage("Server is unavailable", "error");
         console.error(error);
       });
   }, []);
@@ -59,9 +73,11 @@ const App = () => {
               person.id !== existingPerson.id ? person : response
             )
           );
+          showMessage(`Updated ${newPerson.name} phone number`, "success");
           resetInput();
         })
         .catch((error) => {
+          showMessage("Failed to update person", "error");
           console.error(error);
         });
       return;
@@ -76,9 +92,11 @@ const App = () => {
       .create(newPersonObj)
       .then((response) => {
         setPersons(persons.concat(response));
+        showMessage(`Added ${newPerson.name}`, "success");
         resetInput();
       })
       .catch((error) => {
+        showMessage("Failed to add person", "error");
         console.error(error);
       });
   };
@@ -94,8 +112,13 @@ const App = () => {
       .deletePerson(id)
       .then(() => {
         setPersons(persons.filter((person) => person.id !== id));
+        showMessage(`Deleted ${name}`, "success");
       })
       .catch((error) => {
+        showMessage(
+          `Information of ${name} has already removed from server`,
+          "error"
+        );
         console.error(error);
       });
   };
@@ -109,6 +132,7 @@ const App = () => {
   return (
     <div className="app">
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <FilterForm filter={filter} setFilter={setFilter} />
       <PersonsFormInput
         name={name}

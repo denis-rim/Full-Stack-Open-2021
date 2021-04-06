@@ -52,10 +52,32 @@ const App = () => {
       number: newPerson.number,
     };
 
-    personServices.create(newObject).then((response) => {
-      setPersons(persons.concat(response));
-      resetInput();
-    });
+    personServices
+      .create(newObject)
+      .then((response) => {
+        setPersons(persons.concat(response));
+        resetInput();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const deletePerson = (id, name) => {
+    const result = window.confirm(`Delete ${name}?`);
+
+    if (!result) {
+      return;
+    }
+
+    personServices
+      .deletePerson(id)
+      .then(() => {
+        setPersons(persons.filter((person) => person.id !== id));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleChange = (event) => {
@@ -75,7 +97,11 @@ const App = () => {
         addPerson={addPerson}
       />
       <h2>Numbers</h2>
-      <DisplayPersons filter={filter} persons={persons} />
+      <DisplayPersons
+        filter={filter}
+        persons={persons}
+        deletePerson={deletePerson}
+      />
     </div>
   );
 };

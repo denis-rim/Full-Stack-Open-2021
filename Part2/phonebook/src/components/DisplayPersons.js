@@ -1,6 +1,7 @@
 import React from "react";
+import Person from "./Person";
 
-const DisplayPersons = ({ persons, filter }) => {
+const DisplayPersons = ({ persons, filter, deletePerson }) => {
   return (
     <div className="display-persons-container">
       <ul>
@@ -10,9 +11,11 @@ const DisplayPersons = ({ persons, filter }) => {
           )
           .map((person) => {
             return (
-              <li key={person.id}>
-                {person.name} {person.number}
-              </li>
+              <Person
+                key={person.id}
+                person={person}
+                deletePerson={deletePerson}
+              />
             );
           })}
       </ul>

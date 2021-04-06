@@ -42,18 +42,38 @@ const App = () => {
     );
 
     if (existingPerson) {
-      alert(`${newPerson.name} is already added to phonebook`);
-      resetInput();
+      const result = window.confirm(
+        `${existingPerson.name} is already added to phonebook, replace the old number with a new one? `
+      );
+      if (!result) {
+        resetInput();
+        return;
+      }
+      const updatePersonObj = { ...existingPerson, number: newPerson.number };
+
+      personServices
+        .update(existingPerson.id, updatePersonObj)
+        .then((response) => {
+          setPersons(
+            persons.map((person) =>
+              person.id !== existingPerson.id ? person : response
+            )
+          );
+          resetInput();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
       return;
     }
 
-    const newObject = {
+    const newPersonObj = {
       name: newPerson.name,
       number: newPerson.number,
     };
 
     personServices
-      .create(newObject)
+      .create(newPersonObj)
       .then((response) => {
         setPersons(persons.concat(response));
         resetInput();

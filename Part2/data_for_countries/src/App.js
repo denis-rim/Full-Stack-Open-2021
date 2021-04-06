@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import FilterCountries from "./components/FilterCountries";
-import RenderCountries from "./components/RenderCountries";
+import RenderCountries from "./components/Countries/RenderCountries";
 
 function App() {
   const [countries, setState] = useState([]);
+  const [filterValue, setFilterValue] = useState("");
   const [filteredCountries, setFilteredCountries] = useState([]);
 
   useEffect(() => {
@@ -19,12 +20,17 @@ function App() {
       country.name.toLowerCase().includes(filterVal.toLowerCase())
     );
     setFilteredCountries(filteredCountries);
+    setFilterValue(filterVal);
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <FilterCountries handleFilterCountries={handleFilterCountries} />
-      <RenderCountries filteredCountries={filteredCountries} />
+      {filterValue ? (
+        <RenderCountries filteredCountries={filteredCountries} />
+      ) : (
+        <p>Enter country name</p>
+      )}
     </div>
   );
 }

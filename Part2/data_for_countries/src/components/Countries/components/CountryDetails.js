@@ -1,10 +1,9 @@
 import React from "react";
 
 const CountryDetails = ({ country }) => {
-  console.log(country);
-  const { name, capital, population, languages, flag } = country[0];
+  const { name, capital, population, languages, flag } = country;
   return (
-    <div>
+    <div className="country-detail">
       <h3>{name}</h3>
       <div>
         <p>capital: {capital}</p>
